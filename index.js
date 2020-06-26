@@ -1,9 +1,12 @@
 const chalk = require('chalk');
 const clear = require('clear');
 const figlet = require('figlet');
-const Configstore = require('configstore');
-const File = require('./lib/files');
+const argv = require('minimist')(process.argv.slice(2));
 const inquirer = require('./lib/inquirer');
+const init = require('./lib/scripts/init');
+const run = require('./lib/scripts/run');
+const build = require('./lib/scripts/build');
+const File = require('./lib/files');
 
 clear();
 
@@ -14,25 +17,20 @@ console.log(
 );
 
 (async () => {
-  const applicationTypes = ['node-api', 'react-native'];
-  const answers = await inquirer.askApplicationType(applicationTypes);
-  if (answers.type.length) {
-    if (answers.type[0] === 'node-api') {
-      if (File.packageExists('package.json')) {
-        const packageName = File.getPackageName();
-        const config = new Configstore(packageName, {
-          type: answers.type[0],
-          path: File.getCurrentDirectoryBase()
-        });
-        console.log(chalk.yellow(JSON.stringify(config.all)));
-        process.exit();
-      } else {
-        console.log(chalk.red('package.json file not found!'));
-        process.exit();
-      }
+  if (argv._[0] === 'init') {
+    const applicationTypes = ['node-api', 'react-native'];
+    const answers = await inquirer.askApplicationType(applicationTypes);
+    if (answers.type.length) {
+      init(answers.type[0]);
+    } else {
+      console.log(chalk.red('Select a application type!'));
+      process.exit();
     }
-  } else {
-    console.log(chalk.red('Select a application type!'));
-    process.exit();
+  } else if (argv._[0] === 'build') {
+    const packageName = File.getPackageName();
+    build(packageName);
+  } else if (argv._[0] === 'run') {
+    const packageName = File.getPackageName();
+    run(packageName);
   }
 })();
