@@ -1,29 +1,21 @@
 # dockerup
-> Create a dockerized development environment for your applications.
+> Create a dockerized development environment for your applications with zero configuration.
 
-## Running
+## Install & Run
 
-Install dependencies
+Install it globaly
 
-```
-npm install
-```
-
-Build docker image
-
-```
-npm run docker-build
+```sh
+$ npm install -g dokerup
 ```
 
-Run docker container in development mode
-> The API will reload when code at `app` dir changes.
+and run dockerup in your project root directory
 
-```
-npm run docker-run
+```sh
+$ dockerup
 ```
 
-Run docker container in production mode
 
-```
-npm run docker-run
-```
+## Licence
+
+MIT © Danilo Sampaio

@@ -18,7 +18,7 @@ console.log(
 
 (async () => {
   if (argv._[0] === 'init') {
-    const applicationTypes = ['node-api', 'react-native'];
+    const applicationTypes = ['node', 'react-native'];
     const answers = await inquirer.askApplicationType(applicationTypes);
     if (answers.type.length) {
       init(answers.type[0]);
@@ -30,6 +30,9 @@ console.log(
     const packageName = File.getPackageName();
     build(packageName);
   } else if (argv._[0] === 'run') {
+    const packageName = File.getPackageName();
+    run(packageName);
+  } else {
     const packageName = File.getPackageName();
     run(packageName);
   }
