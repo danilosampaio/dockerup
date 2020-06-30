@@ -1,14 +1,15 @@
-const chalk = require('chalk');
-const clear = require('clear');
-const figlet = require('figlet');
-const argv = require('minimist')(process.argv.slice(2));
-const inquirer = require('./lib/inquirer');
-const init = require('./lib/scripts/init');
-const run = require('./lib/scripts/run');
-const build = require('./lib/scripts/build');
-const File = require('./lib/files');
+const chalk = require('chalk')
+const clear = require('clear')
+const figlet = require('figlet')
+const argv = require('minimist')(process.argv.slice(2))
+const inquirer = require('./lib/inquirer')
+const init = require('./lib/scripts/init')
+const run = require('./lib/scripts/run')
+const build = require('./lib/scripts/build')
+const File = require('./lib/files')
+const detectType = require('./lib/applications')
 
-clear();
+clear()
 
 console.log(
   chalk.green(
@@ -17,23 +18,28 @@ console.log(
 );
 
 (async () => {
-  if (argv._[0] === 'init') {
-    const applicationTypes = ['node', 'react-native'];
-    const answers = await inquirer.askApplicationType(applicationTypes);
-    if (answers.type.length) {
-      init(answers.type[0]);
-    } else {
-      console.log(chalk.red('Select a application type!'));
-      process.exit();
+  const type = detectType();
+  if (type === 'node') {
+    const packageName = File.getPackageName()
+    let config = File.loadConfig()
+    
+    if (!config) {
+      config = init(type)
     }
-  } else if (argv._[0] === 'build') {
-    const packageName = File.getPackageName();
-    build(packageName);
-  } else if (argv._[0] === 'run') {
-    const packageName = File.getPackageName();
-    run(packageName);
+
+    if (config.get('build') && argv._[0] !== 'build') {
+      run(config)
+    } else {
+      build(config, (error) => {
+        if (error) {
+          console.log(error)
+        } else {
+          config.set({build: true})
+          run(config)
+        }
+      })
+    }
   } else {
-    const packageName = File.getPackageName();
-    run(packageName);
+    console.log(chalk.red('Application type not supported.'))
   }
-})();
+})()

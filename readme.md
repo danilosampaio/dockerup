@@ -3,8 +3,6 @@
 
 ## Install & Run
 
-Install it globaly
-
 ```sh
 $ npm install -g dokerup
 ```
