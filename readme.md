@@ -7,11 +7,15 @@
 $ npm install -g dokerup
 ```
 
-and run dockerup in your project root directory
+and run dockerup at your project root directory
 
 ```sh
 $ dockerup
 ```
+
+### Node applications
+
+for node applications, it will run `start` script from `package.json`.
 
 
 ## Licence

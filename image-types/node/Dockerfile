@@ -14,4 +14,4 @@ RUN npm install -g nodemon
 
 WORKDIR /home/node/app
 
-CMD ["nodemon", "index.js"]
+CMD ["npm", "start"]
