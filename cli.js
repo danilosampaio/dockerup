@@ -1,3 +1,3 @@
 #!/usr/bin/node
 
-require('./index')
+import './index.js'

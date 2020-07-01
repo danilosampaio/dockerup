@@ -6,8 +6,9 @@
   "bin": "./cli.js",
   "scripts": {
     "lint": "npx eslint *.js lib/*",
-    "test": "npm run lint && jest"
+    "test": "npm run lint && node --experimental-vm-modules node_modules/jest/bin/jest.js"
   },
+  "type": "module",
   "keywords": [
     "docker",
     "ci",

@@ -1,13 +1,14 @@
-const chalk = require('chalk')
-const clear = require('clear')
-const figlet = require('figlet')
-const argv = require('minimist')(process.argv.slice(2))
-const inquirer = require('./lib/inquirer')
-const init = require('./lib/scripts/init')
-const run = require('./lib/scripts/run')
-const build = require('./lib/scripts/build')
-const File = require('./lib/files')
-const detectType = require('./lib/applications')
+import chalk from 'chalk'
+import clear from 'clear'
+import figlet from 'figlet'
+import minimist from 'minimist'
+import { init } from './lib/scripts/init.js'
+import { run } from './lib/scripts/run.js'
+import { build } from './lib/scripts/build.js'
+import { loadConfig } from './lib/files.js'
+import { detectType } from './lib/applications.js'
+
+const argv = minimist(process.argv.slice(2))
 
 clear()
 
@@ -18,11 +19,10 @@ console.log(
 );
 
 (async () => {
-  const type = detectType();
+  const type = detectType()
   if (type === 'node') {
-    const packageName = File.getPackageName()
-    let config = File.loadConfig()
-    
+    let config = loadConfig()
+
     if (!config) {
       config = init(type)
     }
@@ -34,7 +34,7 @@ console.log(
         if (error) {
           console.log(error)
         } else {
-          config.set({build: true})
+          config.set({ build: true })
           run(config)
         }
       })
