@@ -18,6 +18,11 @@ $ dockerup
 for node applications, it will run `start` script from `package.json`.
 
 
+## Ports
+
+By default, all the docker container ports will be mapped/exposed in the host.
+
+
 ## Licence
 
 MIT © Danilo Sampaio
