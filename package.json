@@ -1,6 +1,6 @@
 {
   "name": "@danilosampaio/dockerup",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Create a dockerized development environment for your applications.",
   "main": "index.js",
   "bin": "./cli.js",
