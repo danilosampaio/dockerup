@@ -4,7 +4,7 @@
 ## Install & Run
 
 ```sh
-$ npm install -g dokerup
+$ npm install -g @danilosampaio/dokerup
 ```
 
 and run dockerup at your project root directory
